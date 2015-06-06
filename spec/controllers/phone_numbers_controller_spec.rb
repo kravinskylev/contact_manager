@@ -27,6 +27,10 @@ RSpec.describe PhoneNumbersController, type: :controller do
       { number: "MyString", person_id: 1 }
     }
 
+ let(:valid_person) {
+      { first_name: "Lev", last_name: "Kravinsky" }
+    }
+
  let(:invalid_attributes) {
       { number: nil, person_id: nil }
     }
@@ -151,16 +155,18 @@ RSpec.describe PhoneNumbersController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested phone_number" do
-      phone_number = PhoneNumber.create! valid_attributes
+      lev = Person.create! valid_person
+      phone_number = lev.phone_numbers.create! valid_attributes
       expect {
         delete :destroy, {:id => phone_number.to_param}, valid_session
       }.to change(PhoneNumber, :count).by(-1)
     end
 
     it "redirects to the phone_numbers list" do
-      phone_number = PhoneNumber.create! valid_attributes
+      lev = Person.create! valid_person
+      phone_number = lev.phone_numbers.create! valid_attributes
       delete :destroy, {:id => phone_number.to_param}, valid_session
-      expect(response).to redirect_to(phone_numbers_url)
+      expect(response).to redirect_to(phone_number.person)
     end
   end
 

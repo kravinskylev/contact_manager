@@ -46,4 +46,9 @@ describe 'the person view', type: :feature do
     expect(page).to_not have_content(old_number)
   end
 
+   it 'has a link to add a new phone number' do
+   expect(page).to have_link('delete')
+  end
+
+
 end
