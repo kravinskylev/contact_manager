@@ -56,8 +56,8 @@ describe 'the person view', type: :feature do
   describe "emails" do
 
   before(:each) do
-    person.email_addresses.create(address: "lev@dev.com", person_id: 1)
-    person.email_addresses.create(address: "dev@lev.com", person_id: 1)
+    person.email_addresses.create(address: "lev@dev.com", person_id: person.id)
+    person.email_addresses.create(address: "dev@lev.com", person_id: person.id)
     visit person_path(person)
   end
 
@@ -73,10 +73,17 @@ describe 'the person view', type: :feature do
   it 'adds a new email address' do
     page.click_link('Create Email')
     page.fill_in('Address', with: 'devdevdev')
-    page.fill_in('Person', with: 1)
     page.click_button('Create Email address')
     expect(current_path).to eq(person_path(person))
     expect(page).to have_content('devdevdev')
+  end
+
+  it 'edits emails' do
+    page.all('edit')[0].click
+    page.fill_in('Address', with: '!!!')
+    page.click_button('Update Email address')
+    expect(current_path).to eq(person_path(person))
+    expect(page).to have_content('!!!')
   end
 
   end
