@@ -66,7 +66,9 @@ describe 'the person view', type: :feature do
     expect(page).to have_selector('li', text: 'dev@lev.com')
   end
 
-
+  it 'has an email address link' do
+     expect(page).to have_link('Create Email', href: new_email_address_path(person_id: person.id))
+  end
 
   end
 end
