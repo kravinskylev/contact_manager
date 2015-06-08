@@ -18,6 +18,12 @@
       <%= link_to('delete', phone_number_path(phone), :method => "delete") %>
     </li>
   <% end %>
+
+  <% @person.email_addresses.each do |email| %>
+    <li>
+      <%= email.address %>
+    </li>
+  <% end %>
 </ul>
 
 

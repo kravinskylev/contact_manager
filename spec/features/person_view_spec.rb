@@ -4,6 +4,8 @@ describe 'the person view', type: :feature do
 
   let(:person) { Person.create(first_name: 'John', last_name: 'Doe') }
 
+  describe "person" do
+
   before(:each) do
     person.phone_numbers.create(number: "555-1234")
     person.phone_numbers.create(number: "555-5678")
@@ -49,6 +51,22 @@ describe 'the person view', type: :feature do
    it 'has a link to add a new phone number' do
    expect(page).to have_link('delete')
   end
+  end
+
+  describe "emails" do
+
+  before(:each) do
+    person.email_addresses.create(address: "lev@dev.com", person_id: 1)
+    person.email_addresses.create(address: "dev@lev.com", person_id: 1)
+    visit person_path(person)
+  end
+
+  it 'displays email addresses on a person page' do
+    expect(page).to have_selector('li', text: 'lev@dev.com')
+    expect(page).to have_selector('li', text: 'dev@lev.com')
+  end
 
 
+
+  end
 end
